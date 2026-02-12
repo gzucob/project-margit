@@ -22,8 +22,11 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(name = "name", nullable = false, length = 255 )
+    @Column(name = "name", nullable = false, length = 255)
     private String name;
+
+    @Column(name = "quantity", nullable = false)
+    private Integer quantity;
 
     @Column(name = "price", nullable = false)
     private BigDecimal price;
@@ -35,5 +38,6 @@ public class Product {
     public Product(ProductRequest productRequest) {
         this.name = productRequest.name();
         this.price = productRequest.price();
+        this.quantity = productRequest.quantity();
     }
 }
