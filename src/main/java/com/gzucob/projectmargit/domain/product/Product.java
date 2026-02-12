@@ -32,4 +32,8 @@ public class Product {
     @Column(name = "product_add_at", nullable = false, updatable = false)
     private Instant productAddAt;
 
+    public Product(ProductRequest productRequest) {
+        this.name = productRequest.name();
+        this.price = productRequest.price();
+    }
 }
