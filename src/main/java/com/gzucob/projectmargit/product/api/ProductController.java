@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/products")
@@ -36,4 +37,10 @@ public class ProductController {
     public ResponseEntity<List<ProductSearchByNameResponse>> searchByName (@RequestParam String name) {
         return ResponseEntity.ok(productService.searchByName(name));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ProductSearchByNameResponse> deleteById (@PathVariable UUID id) {
+        return ResponseEntity.ok(productService.deleteById(id));
+    }
+
 }

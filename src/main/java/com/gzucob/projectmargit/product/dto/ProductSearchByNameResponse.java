@@ -1,4 +1,6 @@
 package com.gzucob.projectmargit.product.dto;
 
-public record ProductSearchByNameResponse(String name) {
+import java.util.UUID;
+
+public record ProductSearchByNameResponse(UUID id, String name, String message) {
 }
