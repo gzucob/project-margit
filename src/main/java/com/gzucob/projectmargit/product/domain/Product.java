@@ -45,6 +45,12 @@ public class Product {
         this.quantity = productRequest.quantity();
     }
 
+    public void updateProduct (ProductRequest productRequest) {
+        this.name = productRequest.name();
+        this.price = productRequest.price();
+        this.quantity = productRequest.quantity();
+    }
+
     public void validatePrice (BigDecimal price) {
         if (price.compareTo(new BigDecimal("0.01")) < 0) {
             throw new IllegalArgumentException("The price cannot be zero or negative.");

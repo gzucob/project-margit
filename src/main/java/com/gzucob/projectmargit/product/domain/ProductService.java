@@ -52,4 +52,11 @@ public class ProductService {
                 "Product deleted successfully"
         );
     }
+
+    public Product updateProductById(UUID id, ProductRequest productRequest) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Product Not Found"));
+        product.updateProduct(productRequest);
+        return productRepository.save(product);
+    }
 }
