@@ -26,7 +26,7 @@ public class Product {
     @Column(name = "name", nullable = false, length = 255)
     private String name;
 
-    @Column(name = "quantity", nullable = false)
+    @Column(name = "quantity", unique = true, nullable = false)
     private Integer quantity;
 
     @Column(name = "price", nullable = false)
@@ -37,8 +37,23 @@ public class Product {
     private Instant productAddAt;
 
     public Product(ProductRequest productRequest) {
-        this.name = productRequest.name();
+        validatePrice(productRequest.price());
+        validateQuantity(productRequest.quantity());
+
+        this.name = productRequest.name().trim();
         this.price = productRequest.price();
         this.quantity = productRequest.quantity();
+    }
+
+    public void validatePrice (BigDecimal price) {
+        if (price.compareTo(new BigDecimal("0.01")) < 0) {
+            throw new IllegalArgumentException("The price cannot be zero or negative.");
+        }
+    }
+
+    public void validateQuantity (int quantity) {
+        if (quantity <= 0) {
+            throw new IllegalArgumentException("Quantity cannot be a zero or negative");
+        }
     }
 }

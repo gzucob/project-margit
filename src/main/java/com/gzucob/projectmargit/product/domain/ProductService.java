@@ -17,15 +17,6 @@ public class ProductService {
     }
 
     public Product createProduct (ProductRequest productRequest) {
-        if (productRequest.price().compareTo(new BigDecimal("0.01")) < 0) {
-            throw new IllegalArgumentException("The price cannot be 0 or negative.");
-        }
-        if (productRequest.quantity() <= 0) {
-            throw new IllegalArgumentException("Quantity cannot be 0 or negative.");
-        }
-        if (productRepository.existsByName(productRequest.name())) {
-            throw new IllegalArgumentException("Product alredy exists");
-        }
         return productRepository.save(new Product(productRequest));
     }
 
