@@ -1,5 +1,6 @@
-package com.gzucob.projectmargit.domain.product;
+package com.gzucob.projectmargit.product.domain;
 
+import com.gzucob.projectmargit.product.dto.ProductRequest;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

@@ -1,4 +1,4 @@
-package com.gzucob.projectmargit.domain.product;
+package com.gzucob.projectmargit.product.dto;
 
 import java.math.BigDecimal;
 
