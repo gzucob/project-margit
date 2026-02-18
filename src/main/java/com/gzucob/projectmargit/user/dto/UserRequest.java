@@ -1,4 +1,9 @@
 package com.gzucob.projectmargit.user.dto;
 
-public record UserRequest(String userFirstName, String userLastName, String userEmail, String passwordHash ) {
+import jakarta.validation.constraints.Email;
+
+public record UserRequest(String userFirstName,
+                          String userLastName,
+                          @Email(message = "Invalid email address") String userEmail,
+                          String passwordHash ) {
 }
