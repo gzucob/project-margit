@@ -1,6 +1,7 @@
 package com.gzucob.projectmargit.user.domain;
 
-import com.gzucob.projectmargit.user.dto.UserRequest;
+import com.gzucob.projectmargit.user.dto.CreateUserRequest;
+import com.gzucob.projectmargit.user.dto.UpdateUserRequest;
 import com.gzucob.projectmargit.user.dto.UserResponse;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,12 +19,12 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public User createUser (UserRequest userRequest) {
-        String encodedPassword = passwordEncoder.encode(userRequest.passwordHash());
+    public User createUser (CreateUserRequest createUserRequest) {
+        String encodedPassword = passwordEncoder.encode(createUserRequest.passwordHash());
         User user = new User(
-                userRequest.userFirstName(),
-                userRequest.userLastName(),
-                userRequest.userEmail(),
+                createUserRequest.userFirstName(),
+                createUserRequest.userLastName(),
+                createUserRequest.userEmail(),
                 encodedPassword
         );
         return userRepository.save(user);
@@ -36,7 +37,7 @@ public class UserService {
                         u.getUserFullName(),
                         u.getUserEmail(),
                         u.getPasswordHash(),
-                        "User has been created"
+                        ""
                 ))
                 .toList();
     }
@@ -52,5 +53,16 @@ public class UserService {
                 user.getPasswordHash(),
                 "User deleted successfully"
         );
+    }
+
+    public User updateUserById(UUID id, UpdateUserRequest updateUserRequest) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        user.updateUser(
+                updateUserRequest.userFirstName(),
+                updateUserRequest.userLastName(),
+                updateUserRequest.userEmail()
+        );
+        return userRepository.save(user);
     }
 }

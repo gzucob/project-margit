@@ -53,4 +53,11 @@ public class User {
             this.userFullName = this.userFirstName + " " + this.userLastName;
         }
     }
+
+    public void updateUser (String userFirstName, String userLastName,
+                            String userEmail) {
+        if (userFirstName != null) this.userFirstName = userFirstName;
+        if (userLastName != null) this.userLastName = userLastName;
+        if (userEmail != null) this.userEmail = userEmail;
+    }
 }

@@ -2,7 +2,8 @@ package com.gzucob.projectmargit.user.api;
 
 import com.gzucob.projectmargit.user.domain.User;
 import com.gzucob.projectmargit.user.domain.UserService;
-import com.gzucob.projectmargit.user.dto.UserRequest;
+import com.gzucob.projectmargit.user.dto.UpdateUserRequest;
+import com.gzucob.projectmargit.user.dto.CreateUserRequest;
 import com.gzucob.projectmargit.user.dto.UserResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -23,8 +24,8 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> createUser (@Valid @RequestBody UserRequest userRequest) {
-        User user = userService.createUser(userRequest);
+    public ResponseEntity<User> createUser (@Valid @RequestBody CreateUserRequest createUserRequest) {
+        User user = userService.createUser(createUserRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
 
@@ -36,5 +37,10 @@ public class UserController {
     @DeleteMapping("/{id}")
     public ResponseEntity<UserResponse> deleteById (@PathVariable UUID id) {
         return ResponseEntity.ok(userService.deleteById(id));
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<User> updateUserById (@PathVariable UUID id, @RequestBody UpdateUserRequest updateUserRequest) {
+        return ResponseEntity.ok(userService.updateUserById(id, updateUserRequest));
     }
 }
