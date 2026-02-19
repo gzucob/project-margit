@@ -2,6 +2,7 @@ package com.gzucob.projectmargit.user.api;
 
 import com.gzucob.projectmargit.user.domain.User;
 import com.gzucob.projectmargit.user.domain.UserService;
+import com.gzucob.projectmargit.user.dto.UpdatePasswordRequest;
 import com.gzucob.projectmargit.user.dto.UpdateUserRequest;
 import com.gzucob.projectmargit.user.dto.CreateUserRequest;
 import com.gzucob.projectmargit.user.dto.UserResponse;
@@ -40,7 +41,14 @@ public class UserController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<User> updateUserById (@PathVariable UUID id, @RequestBody UpdateUserRequest updateUserRequest) {
+    public ResponseEntity<User> updateUserById (@PathVariable UUID id,
+                                                @RequestBody UpdateUserRequest updateUserRequest) {
         return ResponseEntity.ok(userService.updateUserById(id, updateUserRequest));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<User> updatePasswordById (@PathVariable UUID id,
+                                                    @RequestBody UpdatePasswordRequest updatePasswordRequest) {
+        return ResponseEntity.ok(userService.updatePasswordById(id, updatePasswordRequest));
     }
 }

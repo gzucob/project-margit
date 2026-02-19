@@ -1,6 +1,7 @@
 package com.gzucob.projectmargit.user.domain;
 
 import com.gzucob.projectmargit.user.dto.CreateUserRequest;
+import com.gzucob.projectmargit.user.dto.UpdatePasswordRequest;
 import com.gzucob.projectmargit.user.dto.UpdateUserRequest;
 import com.gzucob.projectmargit.user.dto.UserResponse;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -62,6 +63,16 @@ public class UserService {
                 updateUserRequest.userFirstName(),
                 updateUserRequest.userLastName(),
                 updateUserRequest.userEmail()
+        );
+        return userRepository.save(user);
+    }
+
+    public User updatePasswordById (UUID id, UpdatePasswordRequest updatePasswordRequest) {
+        String encodedPassword = passwordEncoder.encode(updatePasswordRequest.passwordHash());
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        user.updatePassword(
+                encodedPassword
         );
         return userRepository.save(user);
     }

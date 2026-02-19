@@ -60,4 +60,8 @@ public class User {
         if (userLastName != null) this.userLastName = userLastName;
         if (userEmail != null) this.userEmail = userEmail;
     }
+
+    public void updatePassword (String passwordHash) {
+        if (passwordHash != null) this.passwordHash = passwordHash;
+    }
 }
