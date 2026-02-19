@@ -1,8 +1,9 @@
 package com.gzucob.projectmargit.product.domain;
 
-import com.gzucob.projectmargit.product.dto.ProductRequest;
+import com.gzucob.projectmargit.product.dto.CreateProductRequest;
 import com.gzucob.projectmargit.product.dto.ProductResponse;
 import com.gzucob.projectmargit.product.dto.ProductSearchByNameResponse;
+import com.gzucob.projectmargit.product.dto.UpdateProductRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,8 +17,13 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public Product createProduct (ProductRequest productRequest) {
-        return productRepository.save(new Product(productRequest));
+    public Product createProduct (CreateProductRequest createProductRequest) {
+        Product product = new Product(
+                createProductRequest.name(),
+                createProductRequest.price(),
+                createProductRequest.quantity()
+        );
+        return productRepository.save(product);
     }
 
     public List<ProductResponse> findAllProducts () {
@@ -53,10 +59,14 @@ public class ProductService {
         );
     }
 
-    public Product updateProductById(UUID id, ProductRequest productRequest) {
+    public Product updateProductById(UUID id, UpdateProductRequest updateProductRequest) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Product Not Found"));
-        product.updateProduct(productRequest);
+        product.updateProduct(
+                updateProductRequest.name(),
+                updateProductRequest.price(),
+                updateProductRequest.quantity()
+        );
         return productRepository.save(product);
     }
 }

@@ -1,10 +1,12 @@
 package com.gzucob.projectmargit.product.api;
 
-import com.gzucob.projectmargit.product.dto.ProductRequest;
+import com.gzucob.projectmargit.product.dto.CreateProductRequest;
 import com.gzucob.projectmargit.product.dto.ProductResponse;
 import com.gzucob.projectmargit.product.dto.ProductSearchByNameResponse;
 import com.gzucob.projectmargit.product.domain.Product;
 import com.gzucob.projectmargit.product.domain.ProductService;
+import com.gzucob.projectmargit.product.dto.UpdateProductRequest;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -23,8 +25,8 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<Product> createProduct (@RequestBody ProductRequest productRequest) {
-        Product product = productService.createProduct(productRequest);
+    public ResponseEntity<Product> createProduct (@Valid @RequestBody CreateProductRequest createProductRequest) {
+        Product product = productService.createProduct(createProductRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(product);
     }
 
@@ -43,8 +45,9 @@ public class ProductController {
         return ResponseEntity.ok(productService.deleteById(id));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Product> updateProductById (@PathVariable UUID id, @RequestBody ProductRequest productRequest) {
-       return ResponseEntity.ok(productService.updateProductById(id, productRequest));
+    @PatchMapping("/{id}")
+    public ResponseEntity<Product> updateProductById (@Valid @PathVariable UUID id,
+                                                      @RequestBody UpdateProductRequest updateProductRequest) {
+       return ResponseEntity.ok(productService.updateProductById(id, updateProductRequest));
     }
 }

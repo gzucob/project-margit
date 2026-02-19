@@ -1,6 +1,6 @@
 package com.gzucob.projectmargit.product.domain;
 
-import com.gzucob.projectmargit.product.dto.ProductRequest;
+import com.gzucob.projectmargit.product.dto.CreateProductRequest;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -36,19 +36,37 @@ public class Product {
     @Column(name = "product_add_at", nullable = false, updatable = false)
     private Instant productAddAt;
 
-    public Product(ProductRequest productRequest) {
-        validatePrice(productRequest.price());
-        validateQuantity(productRequest.quantity());
+    public Product(String name, BigDecimal price, Integer quantity) {
+        validateName(name);
+        validatePrice(price);
+        validateQuantity(quantity);
 
-        this.name = productRequest.name().trim();
-        this.price = productRequest.price();
-        this.quantity = productRequest.quantity();
+        this.name = name.trim();
+        this.price = price;
+        this.quantity = quantity;
     }
 
-    public void updateProduct (ProductRequest productRequest) {
-        this.name = productRequest.name();
-        this.price = productRequest.price();
-        this.quantity = productRequest.quantity();
+    public void updateProduct (String name, BigDecimal price, Integer quantity) {
+        if (name != null) {
+            validateName(name);
+            this.name = name.trim();
+        }
+
+        if (price != null) {
+            validatePrice(price);
+            this.price = price;
+        }
+
+        if (quantity != null) {
+            validateQuantity(quantity);
+            this.quantity = quantity;
+        }
+    }
+
+    public void validateName (String name) {
+        if ((name == null || name.trim().isEmpty())) {
+            throw new IllegalArgumentException("Name cannot be a empty");
+        }
     }
 
     public void validatePrice (BigDecimal price) {
