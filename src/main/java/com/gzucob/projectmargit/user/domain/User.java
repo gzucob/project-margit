@@ -1,6 +1,5 @@
 package com.gzucob.projectmargit.user.domain;
 
-import com.gzucob.projectmargit.user.dto.UserRequest;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -40,11 +39,11 @@ public class User {
     @Column(name = "user_created_at", nullable = false, updatable = false)
     private Instant userCreatedAt;
 
-    public User(UserRequest userRequest) {
-        this.userFirstName = userRequest.userFirstName();
-        this.userLastName = userRequest.userLastName();
-        this.userEmail = userRequest.userEmail();
-        this.passwordHash = userRequest.passwordHash();
+    public User(String userFirstName, String userLastName, String userEmail, String passwordHash) {
+        this.userFirstName = userFirstName;
+        this.userLastName = userLastName;
+        this.userEmail = userEmail;
+        this.passwordHash = passwordHash;
     }
 
     @PrePersist

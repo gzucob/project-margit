@@ -1,8 +1,8 @@
 package com.gzucob.projectmargit.user.domain;
 
-import com.gzucob.projectmargit.product.domain.ProductRepository;
 import com.gzucob.projectmargit.user.dto.UserRequest;
 import com.gzucob.projectmargit.user.dto.UserResponse;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,13 +11,22 @@ import java.util.UUID;
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public User createUser (UserRequest userRequest) {
-        return userRepository.save(new User(userRequest));
+        String encodedPassword = passwordEncoder.encode(userRequest.passwordHash());
+        User user = new User(
+                userRequest.userFirstName(),
+                userRequest.userLastName(),
+                userRequest.userEmail(),
+                encodedPassword
+        );
+        return userRepository.save(user);
     }
 
     public List<UserResponse> findAllUsers () {
